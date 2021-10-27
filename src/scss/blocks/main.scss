@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #111;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  width: 400px;
+  height: 700px;
+  background-color: $white;
+  border-radius: 15px;
+  overflow: hidden;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+
+  .dialog_page {
+    width: 100%;
+    flex: 19;
+    overflow-y: auto;
+
+    &-message {
+      width: 98%;
+      margin: 10px auto;
+      border-radius: 10px;
+      background-color: $primary;
+      padding: 5px;
+      display: block;
+      overflow-wrap: break-word;
+      
+      &-text {
+        color: $white;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .form {
+    width: 100%;
+    display: flex;
+    flex: 1;
+
+    &_input {
+      flex: 15;
+      border: 1px solid $primary;
+    }
+
+    &_button {
+      flex: 3;
+      background-color: $primary;
+      padding: 10px;
+      color: $white;
+    }
+  }
+}
