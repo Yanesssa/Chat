@@ -33,12 +33,27 @@ body {
       border-radius: 10px;
       background-color: $primary;
       padding: 5px;
+      // display: flex;
+      // justify-content: space-between;
       display: block;
       overflow-wrap: break-word;
-      
+      position: relative;
+      padding-right: 25px;
+
       &-text {
         color: $white;
         font-size: 18px;
+      }
+
+      &-button {
+        display: block;
+        background-color: red;
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        position: absolute;
+        right: 5px;
+        top: 5px;
       }
     }
   }
