@@ -21,8 +21,10 @@ body {
   justify-content: space-between;
   display: flex;
   flex-direction: column;
+  // padding-top: 20px;
 
   .dialog {
+    margin-top: 25px;
     width: 100%;
     flex: 19;
     overflow-y: auto;

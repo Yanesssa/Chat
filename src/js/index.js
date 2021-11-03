@@ -1,3 +1,6 @@
+// BOOTSRAP
+import 'bootstrap';
+
 // SCRIPTS
 import './script';
 
