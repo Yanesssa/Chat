@@ -4,32 +4,42 @@ const formButton = document.querySelector('.form_button');
 const dialog = document.querySelector('.dialog');
 const progress = document.querySelector('.progress-bar');
 
-const messages = JSON.parse(localStorage.getItem('messages')) ?? [];
+fetchMessages();
 
-messages.forEach(rendorMessage);
-form.addEventListener('submit', (event) => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
   const inputText = input.value;
   if (!inputText || /^\ *$/.test(inputText)) {
     return
   } 
-  loadingProgress();
-  setTimeout(() => {
-    let now = new Date().toLocaleString().slice(0,-3); 
-    const message = {
-      // id: messages.length,
-      id: new Date().getTime(),
+  // loadingProgress();
+  // setTimeout(() => {
+  //   let now = new Date().toLocaleString().slice(0,-3); 
+  //   const message = {
+  //     // id: messages.length,
+  //     id: new Date().getTime(),
+  //     message: inputText,
+  //     date: now,
+  //   }
+  //   rendorMessage(message);
+  //   messages.push(message);
+  //   localStorage.setItem('messages', JSON.stringify(messages));
+  //   input.value = '';
+  // },1500);
+  const response = await fetch('https://f7ep8.sse.codesandbox.io/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
       message: inputText,
-      date: now,
-    }
-    rendorMessage(message);
-    messages.push(message);
-    localStorage.setItem('messages', JSON.stringify(messages));
-    input.value = '';
-  },1500);
+    }),
+  });
+  input.value = '';
+  fetchMessages();
 });
 
-function loadingProgress(){
+function loadingProgress() {
   let width = 0;
   let interval = setInterval(() => {
     if (width < 100){
@@ -42,29 +52,50 @@ function loadingProgress(){
   }, 600);
 }
 
-function rendorMessage(message){
+function renderMessage(message) {
   dialog.innerHTML += `
     <div class="dialog-message" id="${message.id}">
       <div class="dialog-message-header">
         <span class="dialog-message-header-date-time">${message.date}</span>
-        <button class="dialog-message-header-button delete" data-id="${message.id}">-</button>
+        <button type="button" class="dialog-message-header-button delete btn-close" aria-label="Close" data-id="${message.id}"></button>
       </div>
       <p class="dialog-message-text">${message.message}</p>
     </div>
   `;
+}
+
+async function fetchMessages() {
+  const response = await fetch('https://f7ep8.sse.codesandbox.io/messages');
+  const data = await response.json();
+  dialog.innerHTML = '';
+  data.forEach(renderMessage);
+  deleteMessage();
+}
+
+function deleteMessage() {
   const buttonsDelete = document.querySelectorAll('.delete');
   buttonsDelete.forEach((buttonDelete) => {
-    buttonDelete.addEventListener('click', (event) => {
+    buttonDelete.addEventListener('click', async (event) => {
       const id = event.target.getAttribute('data-id');
-      document.getElementById(id).remove();
-      // messages = messages.filter((message) => {
-      //   return message.id != id;
-      // });
-      const deletedIndex = messages.findIndex((message)=>{
-        return message.id == id;
-      })
-      messages.splice(deletedIndex, 1);
-      localStorage.setItem('messages', JSON.stringify(messages));
+      const response = await fetch('https://f7ep8.sse.codesandbox.io/messages', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id,
+        })
+      });
+      fetchMessages();
+      // document.getElementById(id).remove();
+      // // messages = messages.filter((message) => {
+      // //   return message.id != id;
+      // // });
+      // const deletedIndex = messages.findIndex((message)=>{
+      //   return message.id == id;
+      // })
+      // messages.splice(deletedIndex, 1);
+      // localStorage.setItem('messages', JSON.stringify(messages));
     });
   });
 }

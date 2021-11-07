@@ -1,3 +1,13 @@
+@mixin webfont($family, $woffPath, $woff2Path, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: $family;
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+    src: local($family), url($woffPath) format('woff'), url($woff2Path) format('woff2');
+  }
+}
+
 @font-face {
   font-family: 'Helvetica';
   src: url('/fonts/Helvetica.ttf');
@@ -22,3 +32,10 @@
   font-family: 'Helvetica NeueCyr';
   src: url('/fonts/HelveticaNeueCyr-Bold.ttf');
 }
+
+@include webfont(
+  $fontFamilyComfortaa,
+  '../fonts/Comfortaa.woff',
+  '../fonts/Comfortaa.woff2',
+  500
+);
