@@ -1,31 +1,34 @@
+import { Picker } from 'emoji-picker-element';
+
+const picker = new Picker();
+
 const form = document.querySelector('.form');
 const input = document.querySelector('.form_input');
 const formButton = document.querySelector('.form_button');
 const dialog = document.querySelector('.dialog');
 const progress = document.querySelector('.progress-bar');
+const emoji = document.querySelector('.emoji_button');
+const emojiContainer = document.querySelector('.emoji_container');
 
+emojiContainer.appendChild(picker);
 fetchMessages();
+
+emoji.addEventListener('click', (event) => {
+  event.preventDefault();
+  emoji.classList.toggle('shown');
+})
+
+picker.addEventListener('emoji-click', event => {
+  input.value += event.detail.unicode;
+});
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
   const inputText = input.value;
   if (!inputText || /^\ *$/.test(inputText)) {
     return
-  } 
-  // loadingProgress();
-  // setTimeout(() => {
-  //   let now = new Date().toLocaleString().slice(0,-3); 
-  //   const message = {
-  //     // id: messages.length,
-  //     id: new Date().getTime(),
-  //     message: inputText,
-  //     date: now,
-  //   }
-  //   rendorMessage(message);
-  //   messages.push(message);
-  //   localStorage.setItem('messages', JSON.stringify(messages));
-  //   input.value = '';
-  // },1500);
+  }
+  formButton.classList.add('loading');
   const response = await fetch('https://f7ep8.sse.codesandbox.io/messages', {
     method: 'POST',
     headers: {
@@ -37,6 +40,7 @@ form.addEventListener('submit', async (event) => {
   });
   input.value = '';
   fetchMessages();
+  formButton.classList.remove('loading');
 });
 
 function loadingProgress() {

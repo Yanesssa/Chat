@@ -14,8 +14,15 @@
 
     <form action="#" class="form">
       <input type="text" class="form_input">
-      <button class="form_button"><i class="bi bi-send"></i></button>
-      <!-- <button type="button" class="btn btn-outline-info btn-form">Отправить</button> -->
+      <!-- <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-html="true" title="<emoji-picker class='dark'></emoji-picker>">
+        <i class="bi bi-emoji-wink"></i>
+      </button> -->
+      <button class="emoji_button">
+        <div class="emoji_container">
+        </div>
+        <i class="bi bi-emoji-wink"></i>
+      </button>
+      <button class="form_button"><i class="bi bi-send send"></i><i class="bi bi-arrow-counterclockwise load"></i></button>
     </form>
   </div>
 </body>
