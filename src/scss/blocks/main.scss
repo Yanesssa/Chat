@@ -24,10 +24,22 @@ body {
   box-shadow: 0px 0px 25px 3px #00000077;
   border-radius: 15px;
   overflow: hidden;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column;
 
+  .screen {
+    width: 400px;
+    height: 700px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+  }
+  .auth {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    * {
+      margin: 10px 0;
+    }
+  }
   .dialog {
     width: 100%;
     flex: 19;
@@ -43,8 +55,24 @@ body {
       position: relative;
       padding: 5px 20px 10px 20px;
 
+      &.your_message {
+        background-color: darken($primary, 10%);
+      }
       &-header {
         margin-bottom: 10px;
+
+        &-avatar {
+          height: 20px;
+          width: 20px;
+          border-radius: 100%;
+          object-fit: cover;
+        }
+
+        &-user {
+          font-size:12px;
+          font-weight: bold;
+          color: $date-time-color;
+        }
 
         &-date-time {
           font-size:12px;
